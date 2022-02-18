@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  nginx:
+    restart: always
+    image: nginx:latest
+    depends_on:
+      - db
+    ports:
+      - "$N_IN_1:$N_OUT_1"
+      - "$N_IN_2:$N_OUT_2"
+    volumes:
+      - ./:/var/www/html
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d
+      - ./docker/nginx/logs:/var/log/nginx
+
+  php:
+    restart: always
+    build: ./
+    depends_on:
+      - db
+    volumes:
+      - ./:/var/www/html
+
+  db:
+    restart: always
+    image: postgres:13
+    ports:
+      - "$DB_IN:$DB_OUT"
+    environment:
+      - POSTGRES_DB=$DB_NAME
+      - POSTGRES_USER=$DB_USERNAME
+      - POSTGRES_PASSWORD=$DB_PASSWORD
+    volumes:
+      - ../db_data:/var/lib/postgresql/data
