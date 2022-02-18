@@ -6,7 +6,7 @@ docker exec -it dance_club_php_1 /bin/bash
 composer install
 php init --env=Development --overwrite=All
 ```
-Start server (defaults to http://127.0.0.1:20172)
+Start server (defaults to http://127.0.0.1:20172/v1/swagger)
 
 DESCRIPTION
 -------------------
